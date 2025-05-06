@@ -41,7 +41,7 @@ This prompt is implemented in the **`Werewolf-main\examples\werewolf.json`**
         "parallel": false
     }
 }
-
+```
 
 
 ## Full Prompt Design to Implement Werewolves personality
