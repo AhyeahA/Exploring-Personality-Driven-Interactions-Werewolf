@@ -145,7 +145,7 @@ DEFAULT_MODEL = "gpt-4-0125-preview"
 
 ```
 
-- **`Werewolf-main/examples/werewolf.json`** : critical for refining the main prompt, specifying the rules and objectives, and incorporating the note regarding the potential assignment of a personality.
+- **`Werewolf-main/examples/werewolf.json`** : Critical for refining the main prompt, specifying the rules and objectives, and incorporating the note regarding the potential assignment of a personality.
 
 - **`Werewolf-main/chatarena/environments/werewolf.py`**: Responsible for assigning specific personalities to the agents designated as Werewolves.
 
