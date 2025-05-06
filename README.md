@@ -44,7 +44,7 @@ This prompt is implemented in the **`Werewolf-main\examples\werewolf.json`**
 
 
 
-## Full prompt to design Werewolves personality
+## Full Prompt Design to Implement Werewolves personality
 
 The prompt shown below has been specifically modified for the agents assigned as Werewolves, with explicit instructions and traits characteristic of a highly neurotic individual.
 
@@ -62,7 +62,7 @@ self._moderator_speak(
     "You should also communicate in a casual manner, not too formal, like you are playing this game with a group of friends.",
     visible_to=player, importance=1
 )
-
+```
 
 
 # Getting Started: The Setup
@@ -110,15 +110,20 @@ python run_werewolf.py --current-game-number 18
 ---
 This guide ensures a smooth setup and execution of the Werewolf game. If you encounter any issues, double-check your environment variables and dependencies.
 
-# The essential component of the implementation
+# The Essential Components of the Implementation
 
 ## Key Variables
 
-The following variables were key in producing the best results:
+In this project, the following parameters were configured to optimize agent behavior and language generation:
 
 - **`temperature`**: Controls the randomness of the model’s responses. Lower values make outputs more deterministic, while higher values increase variability and creativity.
 - **`max_tokens`**: Sets the maximum length of the generated response. This limits how many tokens (words or characters) the model can output.
 - **`model`**: Specifies the version of the language model being used (e.g., `gpt-3.5-turbo` or `gpt-4`), which can affect performance, speed, and output quality.
+
+
+For this project, we configured key parameters to enhance the quality of language generation and agent behavior, as follows: the `temperature` parameter was set to `1` to encourage variability and spontaneity in the agents’ responses, fostering more expressive and human-like interactions. The `max_tokens` parameter was set to `100`, providing each agent with sufficient length to generate coherent and contextually rich dialogue. Additionally, we employed the `gpt-4-0125-preview` model, which demonstrated superior linguistic performance compared to `gpt-3.5`, particularly in its ability to express distinct personality traits through language.
+
+
 
 ## Crucial Files
 
