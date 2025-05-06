@@ -17,7 +17,7 @@ do
       --exps-retrieval-threshold 0.80 \
       --similar-exps-threshold 0.01 \
       --max-tokens 100 \
-      --temperature 0.3 \
+      --temperature 1.0 \
       --use-api-server $API_SERVER \
       --environment-config ./examples/werewolf.json \
       --role-config ./config/1.json \

@@ -26,9 +26,9 @@ def main():
     parser.add_argument("--answer-topk", type=int, default=5, help="number of the retrieval answers for choosing")
     parser.add_argument("--exps-retrieval-threshold", type=float, default=0.6, help="experiences whose reflexion similarity larger than it will be recalled")
     parser.add_argument("--similar-exps-threshold", type=float, default=0.1, help="experiences whose similarity difference is less than it will be omited")
-    parser.add_argument("--max-tokens", type=int, default=100, help="maximum tokens of each generation")
+    parser.add_argument("--max-tokens", type=int, default=500, help="maximum tokens of each generation")
     parser.add_argument("--retri-question-number", type=int, default=5, help="number of questions from question history")
-    parser.add_argument("--temperature", type=float, default=0.2, help="temperature hyper-parameter of generation model")
+    parser.add_argument("--temperature", type=float, default=1.0, help="temperature hyper-parameter of generation model")
     parser.add_argument("--use-api-server", type=int, default=0, help="use the self-developed api server for anytime calling")
 
     parser.add_argument("--save-exps-incremental", action="store_true", default=False, help="save all experiences defore this piece of game in a file")
@@ -58,7 +58,8 @@ def main():
             f.write(f"{arg} : {getattr(args, arg)}  " + "\n")
         f.write("\n")
 
-    with open("C:\\Users\\alhar\\Downloads\\Werewolf-main\\Werewolf-main\\examples\\werewolf.json", "r") as f:
+
+    with open("C:\\Users\\alhar\\Desktop\\Exploring-Personality-Driven-Interactions-Werewolf\\Werewolf-main\\Werewolf-main\\examples\\werewolf.json", "r") as f:
         config = json.load(f)
     moderator_config = {
         "role_desc": "",
@@ -66,8 +67,8 @@ def main():
         "terminal_condition": "",
         "backend": {
             "backend_type": "openai-chat",
-            "temperature": 0.2,
-            "max_tokens": 100
+            "temperature": 1.0,
+            "max_tokens": 500
         }
     }
     env_config = {

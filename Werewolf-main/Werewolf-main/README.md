@@ -34,7 +34,7 @@ Since using ChatGPT requires an API authorized by OpenAI, you need to configure 
 
 ```bash
 # here in your terminal, xxxxxxx is a valid API
-OPENAI_API_KEY="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"
+OPENAI_API_KEY=""
 ```
 
 At this point, you don't need to use the **--use-api-server** argument, because you are not using a self-constructed API server. If you want to use ChatGPT services by connecting to a self-constructed server, you first need to add the **--use-api-server** argument when running werewolf game, assigning it a certain value to represent the server number being used. Moreover, you need to correctly configure the server connection in line 74 of the `chatarena/backends/openai.py` file.

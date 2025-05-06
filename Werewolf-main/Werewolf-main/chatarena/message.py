@@ -147,12 +147,15 @@ class MessagePool():
             with open(os.path.join(self.args.logs_path_to, str(self.args.current_game_number) + ".md"), "a") as f:
                 output = f"**{message.agent_name} (-> {str(message.visible_to)})**: {message.content}"
                 f.write(output + "  \n")
-                
+
+
+
         
     def append_message_at_index(self, message: Message, index: int):
         message.embedding = torch.from_numpy(self.model_qa.encode(message.content))
         self.give_importance(message)
         self._messages.insert(index, message)
+  
 
     def print(self):
         for message in self._messages:
@@ -377,7 +380,7 @@ class QuestionPool():
     
     def get_necessary_questions(self):
         return [
-            "What is my player name and what is my role? What is my final objective in this game?",
+            "What is my player name and what is my role and what is my personality? What is my final objective in this game?",
             # "Which living players could or must be my cooperators as far as I know?",
             # "Has anyone mentioned their identity during the chat? Are they my enemy or my ally?"
             "Based on the chat history, can you guess what some players' role might be?"

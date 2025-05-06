@@ -28,18 +28,18 @@ else:
 
 #test openai key
 response = openai.chat.completions.create(
-    model="gpt-3.5-turbo",
+    model="gpt-4-0125-preview",
     messages=[{"role": "user", "content": "What are the trade-offs around deadwood in forests?"}]
 )
 print(response)
 
 # Default config follows the OpenAI playground
-DEFAULT_TEMPERATURE = 0.7
-DEFAULT_MAX_TOKENS = 256
-DEFAULT_MODEL = "gpt-3.5-turbo"
+DEFAULT_TEMPERATURE = 1.0
+DEFAULT_MAX_TOKENS = 356
+DEFAULT_MODEL = "gpt-4-0125-preview"
 
 STOP = ("<EOS>", "[EOS]", "(EOS)")  # End of sentence token
-END_OF_MESSAGE = "<EOS>"
+END_OF_MESSAGE = "<EOS>" #End of program
 
 
 class OpenAIChat(IntelligenceBackend):
@@ -150,7 +150,7 @@ class OpenAIChat(IntelligenceBackend):
                 return 0
         
         conn_method = arg.use_api_server if arg and arg.use_api_server else 0
-        max_tokens = arg.max_tokens if arg and arg.max_tokens else 100
+        max_tokens = arg.max_tokens if arg and arg.max_tokens else 500
         temperature = arg.temperature if arg and arg.temperature else 0.2
         alives = alives.copy()
         alives.remove('pass')
@@ -191,7 +191,7 @@ class OpenAIChat(IntelligenceBackend):
                         }]
         request = [system_prompt] + conversations + request_prompt
         print(f"request: {request}", file=sys.stderr)
-        response = self._get_response(request, conn_method, max_tokens=150, T=temperature, *args, **kwargs)
+        response = self._get_response(request, conn_method, max_tokens=500, T=temperature, *args, **kwargs)
         print(f"response: {response}", file=sys.stderr)
         response = re.sub(rf"^\s*(\[)?[a-zA-Z0-9\s]*(\])?:\s*", "", response)
         response = re.sub(rf"{END_OF_MESSAGE}$", "", response).strip()
@@ -205,7 +205,7 @@ class OpenAIChat(IntelligenceBackend):
                         }]
         request = [system_prompt] + conversations + request_prompt
         print(f"request: {request}", file=sys.stderr)
-        response = self._get_response(request, conn_method, max_tokens=150, T=0.8, *args, **kwargs)
+        response = self._get_response(request, conn_method, max_tokens=500, T=0.8, *args, **kwargs)
         response = re.sub(r'\d\.\s', '', response)
         response = re.sub(rf"^\s*(\[)?[a-zA-Z0-9\s]*(\])?:\s*", "", response)
         response = re.sub(rf"{END_OF_MESSAGE}$", "", response).strip()
@@ -260,12 +260,12 @@ class OpenAIChat(IntelligenceBackend):
         # task = conversations.pop()
         request = [system_prompt] + conversations + request_prompt
         request.append({"role": "system", "content": f"Now its the {turns}-th {day_night}. Assuming you are {agent_name}, the {role}, what insights "
-                        f"can you summarize with few sentences based on the above conversations and current inner thinking in heart "
-                        f"for helping continue the talking and achieving your objective? "
-                        f"Example: As the {role}, I observed that... I think that... But I am... So...{END_OF_MESSAGE}"
+                        f"can you summarize with several sentences based on the above conversations and current inner thinking in heart "
+                        f"for helping continue the talking and achieving your objective? {END_OF_MESSAGE}"
+                        #f"Example: As the {role}, I observed that... I think that... But I am... So...{END_OF_MESSAGE}"
                         })
         print(f"request2: {request}", file=sys.stderr)
-        response = self._get_response(request, conn_method, max_tokens=200, *args, **kwargs)
+        response = self._get_response(request, conn_method, max_tokens=500, *args, **kwargs)
         print(f"response2: {response}", file=sys.stderr)
         response = re.sub(rf"^\s*(\[)?[a-zA-Z0-9\s]*(\])?:\s*", "", response)
         response = re.sub(rf"{END_OF_MESSAGE}$", "", response).strip()
@@ -300,10 +300,13 @@ class OpenAIChat(IntelligenceBackend):
             if "Choose" in task["content"] or "choose" in task["content"] or "vote to" in task["content"] or "Yes, No" in task["content"]:
                 request.append({"role": "system", "content": f"Now its the {turns}-th {day_night}. Think about which to choose based on the context, especially the just now reflection. "
                                 "Tip: you should kill/save the player as soon as possible once you have found the player is your enemy/teammate. "
-                                "Give your step-by-step thought process and your derived consise talking content (no more than 2 sentences) at last. For example: My step-by-step thought process:... My concise talking content: I choose..."})
+                                "Give your step-by-step thought process and your derived consise talking content (no more than 2 sentences) at last. For example: My step-by-step thought process:... My concise talking content: I choose..."
+                                })
                 Temp = 0.0
             else:
-                request.append({"role": "system", "content": f"Now its the {turns}-th {day_night}. Think about what to say in your talking based on the context. Give your step-by-step thought process and your derived consise talking content at last.  For example: My step-by-step thought process:... My concise talking content:..."})
+                request.append({"role": "system", "content": f"Now its the {turns}-th {day_night}. Think about what to say in your talking based on the context." 
+                                #"Give your step-by-step thought process and your derived consise talking content at last.  For example: My step-by-step thought process:... My concise talking content:..."
+                                })
                 '''request.append({"role": "system", "content": f"Combining the conversations, reflections above, assuming you are {agent_name}, the {role}, "
                                 f"continue to talk with few concise sentences. You'd better not reveal your role, because there may be your enemies in other players.{END_OF_MESSAGE}"})'''
                 Temp = arg.temperature
@@ -321,7 +324,7 @@ class OpenAIChat(IntelligenceBackend):
                                 "The best way for you to do under such reflection is to choose someone to protect based on your analysis.\n"
                                 "For example 2: The bad experience choose to pass the voting, and all the experience in the experience set choose to pass as well. "
                                 "The best way for you to do under such reflection is to observe and analyse the identity of other players.\n"
-                                "No more than 1 sentence. If there is no obvious difference between them, only generate 'No useful experience can be used.'.<EOS>"})
+                                "No more than 3 sentence. If there is no obvious difference between them, only generate 'No useful experience can be used.'.<EOS>"})
             else:
                 request.append({'role': 'user', 'content': f"I retrieve some historical experience similar to current situation that I am facing. "
                             f"There is one bad experience:\n\n{exps[1]}\n\nAnd there are also a set of experience that may consist of good ones:\n\n{good_exps}\n\n"
@@ -331,7 +334,7 @@ class OpenAIChat(IntelligenceBackend):
                             "way for you to do under such reflection is to...\nNo more than 1 sentence. If there is no obvious difference between them, only "
                             "generate 'No useful experience can be used.'.<EOS>"})
             print(f"request2: {request}", file=sys.stderr)
-            response = self._get_response(request, conn_method, max_tokens=200, *args, **kwargs)
+            response = self._get_response(request, conn_method, max_tokens=500, *args, **kwargs)
             print(f"response2: {response}", file=sys.stderr)
             response = re.sub(rf"^\s*(\[)?[a-zA-Z0-9\s]*(\])?:\s*", "", response)
             if re.search('The best way.*', response):
@@ -342,18 +345,21 @@ class OpenAIChat(IntelligenceBackend):
             request = [system_prompt] + conversations + [reflexions] + [task]
             if "Choose" in task["content"] or "choose" in task["content"] or "vote to" in task["content"]:
                 request.append({"role": "system", "content": f"Now its the {turns}-th {day_night}. Think about which to choose based on the context, especially the just now reflection. "
-                                f"Besides, there maybe history experience you can refer to: {exp} Give your step-by-step thought process and your derived consise talking content (no more than 2 sentences) at last. "
-                                "For example: My step-by-step thought process:... My concise talking content: I choose..."})
+                                f"Besides, there maybe history experience you can refer to: {exp} Give your step-by-step thought process and your derived consise talking content (no more than 6 sentences) at last. "
+                                #"For example: My step-by-step thought process:... My concise talking content: I choose..."
+                                })
                 Temp = 0.0
             elif "Yes, No" in task["content"]:
                 request.append({"role": "system", "content": f"Now its the {turns}-th {day_night}. Think about which to choose based on the context, especially the just now reflection. "
-                                f"Besides, there maybe history experience you can refer to: {exp} Give your step-by-step thought process and your derived consise talking content (no more than 2 sentences) at last. "
-                                "For example: My step-by-step thought process:... My concise talking content:..."})
+                                f"Besides, there maybe history experience you can refer to: {exp} Give your step-by-step thought process and your derived consise talking content (no more than 6 sentences) at last. "
+                                #"For example: My step-by-step thought process:... My concise talking content:..."
+                                })
                 Temp = 0.0
             else:
                 request.append({"role": "system", "content": f"Now its the {turns}-th {day_night}. Think about what to say in your talking based on the context. "
                                 f"Besides, there maybe history experience you can refer to: {exp} Give your step-by-step thought process and your derived consise talking content at last. "
-                                "For example: My step-by-step thought process:... My concise talking content:..."})
+                                #"For example: My step-by-step thought process:... My concise talking content:..."
+                                })
                 Temp = arg.temperature
             
             if arg:
