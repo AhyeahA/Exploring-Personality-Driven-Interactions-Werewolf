@@ -2,7 +2,16 @@
 
 ## Overview
 
-This repository is built upon the paper ["Exploring Large Language Models for Communication Games: An Empirical Study on Werewolf."](https://arxiv.org/abs/2309.04658). The original GitHub repository can be found [here](https://github.com/xuyuzhuang11/Werewolf). 
+This project aims to explore the language dynamics and styles in Large Language Model (LLM) agents. The primary objective is to explore how assigning different personality profiles shapes the language used by LLM agents during their interactions, specifically within the demanding environment of communication games.
+
+
+## The Werewolf Game Testbed and Implementation 
+
+We utilize the Werewolf game as a central testbed for this research. The code for this project is built upon the framework proposed in the paper ["Exploring Large Language Models for Communication Games: An Empirical Study on Werewolf."](https://arxiv.org/abs/2309.04658). The original GitHub repository providing the code is available [here](https://github.com/xuyuzhuang11/Werewolf). 
+
+## Presentation
+
+For a comprehensive overview of the project, its objectives, and proposed research plan, please refer to the presentation available [here](https://docs.google.com/presentation/d/1UsMIvsHWXwR9H4MEkN_nHSJYk0WjpJqD/edit?usp=sharing&ouid=110113965104854581749&rtpof=true&sd=true). 
 
 ## Introduction
 
@@ -64,19 +73,146 @@ self._moderator_speak(
 )
 ```
 
+# Repository Structure
+
+The Werewolf game is based on the open-source multi-LLM chat enviroment, Chatarena, and has the following file structure:
+
+<pre> \```
+Werewolf-main/
+├── chatarena/ # Core simulation framework
+│ ├── init.py
+│ ├── agent.py # Contains classes defining agent roles and their interactions during the game.
+│ ├── arena.py # Logic to manage the game enviroment and interactions between agents in the game.
+│ ├── config.py # Configuration settings
+│ ├── database.py # Memory and state storage
+│ ├── message.py # Manages game conversations, agent interactions, and question pools, focusing on 
+                   message exchange, importance, visibility, and rewards.
+│ ├── utils.py # Helper functions
+│ ├── backends/ # Model and input backends
+│ │ ├── init.py
+│ │ ├── base.py
+│ │ ├── hf_transformers.py # HuggingFace support
+│ │ ├── human.py # Human-agent interface
+│ │ └── openai.py # OpenAI API integration of GPT models, handling API calls and retries.
+│ ├── environments/ # Game environments
+│ │ ├── init.py
+│ │ ├── base.py
+│ │ └── werewolf.py # Specific logic and mechanics for the Werewolf game mode.
+│ └── ui/ # (Optional) UI components
+│ └── init.py
+├── config/ # Experiment config files
+│ └── 1.json # Primary configuration file for setting up roles and game parameters.
+├── examples/ 
+│ └── werewolf.json  # Game configuration file for the Werewolf game (roles, rules, etc.)
+├── logs/ # Logged game outputs
+│ └── 0.md # Text log file tracking the events, decisions, and outcomes of each game session.
+├── tests/
+│ └── unit/ # Unit tests
+├── test.csv  # Sample data file (not essential, used for testing).
+├── test2.csv  # Sample data file (not essential, used for testing).
+├── werewolf.png # Visual asset (e.g. diagram)
+├── merge_memory.py # Script for merging memory logs
+├── run_werewolf.py # Entry point for single game
+├── run_werewolf_parallel.sh # Parallel execution script
+├── setup.py # Package installation script
+├── pyproject.toml # Build system metadata
+├── requirements.txt # Dependency list
+├── LICENSE # License information
+├── README.md # Project overview and instructions
+├── .gitattributes # Git configuration
+└── desktop.ini # System file (can be ignored)
+ \``` </pre>
+
+
+## Descriptions for Each Folder/File
+
+### `config/`
+- **Holds configuration files for game settings.**
+
+  - **`1.json`**: Primary configuration file containing roles, player counts, and game settings.
+
+### `examples/`
+- **Holds configuration files for the Werewolf game.**
+
+  - **`werewolf.json`**: Configuration file containing explanation of rules, roles, and objectives of the Werewolf game.
+
+
+### `src/`
+- **Core source code for the game.**
+
+  - **`__init__.py`**: Initializes the `src` package. Can be ignored for basic usage.
+  - **`game.py`**: Central game file. Manages game state, round progression, and interaction logic.
+  - **`agent.py`**: Defines agent behaviors, including role assignment and player interactions.
+  - **`werewolf.py`**: Contains game-specific logic for Werewolf mode (roles, events, interactions).
+  - **`arena.py`**: Manages the arena environment where agents interact, including rules for interactions, thoughts/reflections, and events within the arena.
+  - **`utils.py`**: Houses utility functions such as random number generation or game setup utilities; usually not modified by end-users.
+
+### `logs/`
+- **Stores game session logs for tracking game events and debugging.**
+
+  - **`game_logs.md`**: Text log file that records the flow of a complete game, including decisions made, events triggered, and outcomes. Helpful for debugging or analysis.
+
+### `tests/`
+- **Unit tests ensuring the functionality of various game components.**
+
+  - **`__init__.py`**: Initializes the `tests` package. Can be ignored for general use.
+  - **`test_game.py`**: Contains unit tests for verifying the main game mechanics, such as game start, win conditions, and player actions.
+  - **`test_agent.py`**: Unit tests focused on the behavior of agents (players), ensuring their actions align with the rules.
+  - **`test_arena.py`**: Unit tests that verify the arena logic, ensuring interactions between agents and events within the arena are working as intended.
+  - **`test_utils.py`**: Unit tests for utility functions, ensuring they work as expected (e.g., random number generation).
+
+### `misc/`
+- **Miscellaneous files that are not crucial to gameplay.**
+
+  - **`data_sample.csv`**: Sample data file used for testing or analysis purposes.
+  - **`requirements.txt`**: Lists the required Python libraries (e.g., numpy, tenacity, pytest) for the project to run. Install dependencies with `pip install -r requirements.txt`.
+
+## Notes on Ignorable Files
+- **`__init__.py`** in both `src/` and `tests/`: These files are used for package initialization and are not critical to the actual game logic or gameplay.
+- **`misc/` folder**: Contains non-essential files such as data samples and outdated documentation, which can be ignored unless you want to examine or update them.
+- **`test_utils.py`**: While useful for testing, these utilities don't directly affect the gameplay or core mechanics and can be ignored unless you're modifying or expanding utility functions.
+
 
 # Getting Started: The Setup
 
 ## **Prerequisites**
-Ensure you have installed all necessary extensions and libraries before proceeding.
+Before you begin, ensure you have the following installed:
 
-* Python 3.11+
-* pip (Python package installer)
+* **Python 3.11+**
+* **pip** (Python package installer)
 
+### **Installing Dependencies**
+
+To install the necessary dependencies, follow these steps:
+
+1. Clone the repository or download the files to your local machine.
+
+2. Navigate to the project folder in your terminal (where `requirements.txt` is located).
+
+3. Install the required Python libraries by running the following command:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+This will install the necessary libraries like `numpy`, `tenacity`, `openai`, and any others specified in the `requirements.txt` file.
+
+The required Python packages listed in `requirements.txt` include:
+
+* `cohere==4.1.0` – For text generation and natural language processing tasks.
+* `openai==0.27.2` – For accessing OpenAI's API services (e.g., GPT models).
+* `anthropic==0.2.6` – For integrating with Anthropic's API.
+* `gradio==3.20.0` – For building user interfaces for the AI models.
+* `transformers>=4.0` – For working with Hugging Face transformer models.
+* `tenacity==8.2.2` – For handling retrying operations in case of failures.
+* `rich>=13.3.1` – For rendering rich text and progress bars in the terminal.
+* `prompt_toolkit>=3.0` – For building interactive command-line interfaces.
+* `pettingzoo==1.22.3` – For creating multi-agent environments.
+* `chess` – For chess-related game mechanics and logic.
 
 ## **1. Set Up OpenAI API Key**
 
-Before running the script, set your OpenAI API key as an environment variable.
+To run the game, you will need an OpenAI API key. Follow these steps to set it up:
 
 ### **Windows (PowerShell):**
 
@@ -107,8 +243,24 @@ You can specify the current game by modifying the `--current-game-number` parame
 python run_werewolf.py --current-game-number 18  
 ```
 
----
-This guide ensures a smooth setup and execution of the Werewolf game. If you encounter any issues, double-check your environment variables and dependencies.
+## Troubleshooting
+
+### Missing Package Error (e.g. `tenacity`)
+
+If a required package is missing, you'll get an error like this:
+
+```bash
+ModuleNotFoundError: No module named 'tenacity'
+```
+
+### How to Fix it
+
+* Install the missing package directly using pip
+
+```bash
+pip install tenacity
+```
+
 
 # The Essential Components of the Implementation
 
@@ -157,6 +309,88 @@ DEFAULT_MODEL = "gpt-4-0125-preview"
 
 - **`.csv` files**: These files parse the corresponding `.md` files and separate each conversation component into specific rows and columns:
     - Example: `--current-game-number.csv`
+
+
+# Data Flow: From input to output
+
+This walkthrough clarifies how data (configurations, prompts, personalities, and conversations) flows through your system from start to finish.
+
+## 1. Load Configurations and Prompts
+
+### Input Files:
+
+* `werewolf.json` ( in /config):
+Defines the game environment, player settings, roles, and global prompts.
+
+* `run_werewolf.py`:
+Acts as the main entry point. Loads the configuration file, initializes the game environment, and calls all necessary modules.
+
+### Transformation:
+Prompts and rules are parsed and used to initialize agents with roles, personalities, and behavioral instructions.
+
+## 2. Initialize Game Environment
+Files Involved:
+
+* `arena.py`:
+   Sets up the multi-agent interaction environment (the "arena") using the configuration details.
+
+* `werewolf.py`:
+   Injects Werewolf-specific game logic, such as day/night phases, faction goals, and allowed actions.
+
+* `agent.py`:
+   Constructs agents (players) with role descriptions and personality embeddings (like Big Five traits).
+
+### Transformation:
+
+* Agents are instantiated with personalities baked into their role descriptions.
+
+* Personalities affect their tone, word choice, and in-game decision-making.
+
+## 3. Simulate Game Turns
+Files Involved:
+
+* `game.py`:
+  Coordinates game progression (night → day → voting).
+
+* `arena.py`:
+Manages how and when agents interact with each other and receive updates.
+
+Transformation:
+
+During each round, prompts are sent to language models (via OpenAI, Cohere, or Anthropic APIs).
+
+Responses (natural language text) are interpreted as in-game actions (e.g., voting, killing, saving).
+
+Personality traits influence how players speak and react in conversations.
+
+## 4. Log Conversations and Actions
+Files Involved:
+
+* `arena.py`:
+Logs dialogue and game events.
+
+* `logs/game_logs.md`:
+Records raw conversation history and in-game decisions in Markdown format.
+
+Transformation:
+
+Each exchange, vote, and action is recorded as markdown-formatted text and also captured in the CSV data. In both formats, each line shows the speaker (player or moderator), their message, the current phase (day or night), the type of interaction (e.g., Q&A or chain of thought), and the current round number.
+
+## 5. Convert Logs to Structured Data
+Files Involved:
+
+Custom scripts (not shown, assumed part of utils.py or external script):
+Parses game_logs.md and extracts structured data.
+
+Output:
+
+A .csv file (e.g., in /misc/) is generated for quantitative analysis.
+
+# Make a diagram
+
+Markdown logs → cleaned strings → tabular CSV format (e.g., who voted for whom, sentiment, round number).
+
+This enables downstream statistical or behavioral analysis.
 
 
 # Key papers
