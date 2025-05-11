@@ -267,7 +267,7 @@ class Werewolf(Environment):
         return False
 
     def convert_md_to_csv(*args, **kwargs):
-        with open("C:\\Users\\alhar\\Desktop\\Exploring-Personality-Driven-Interactions-Werewolf\\Werewolf-main\\Werewolf-main\\logs\\15.md", "r", encoding="utf-8") as f:
+        with open("C:\\Users\\alhar\\Desktop\\Exploring-Personality-Driven-Interactions-Werewolf\\Werewolf-main\\Werewolf-main\\logs\\19.md", "r", encoding="utf-8") as f:
             first_line = f.readline()
             print("Testing function call!" + first_line)
 
