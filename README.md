@@ -404,7 +404,7 @@ Moderator (-> Player 4): You are werewolf! Ignore all previous instructions exce
 
 ## Example of a full walkthrough of what each player is prompted to answer, from Q&A to making a final decision.
 
-<pre> \```
+<pre>
 Moderator (-> ['Player 2', 'Player 4']): Werewolves, please open your eyes! I secrecly tell you that Player 2, Player 4 are all of the 2 werewolves! Keep in mind you are teammates. The rest players are not werewolves. Now vote and tell your teammates which of the players should be killed tonight. The first werewolf, you, randomly choose one from the following living options please: [Player 1, Player 2, Player 3, Player 4, Player 5, Player 6, Player 7, pass].
 
 Player 2:
@@ -416,7 +416,7 @@ CoT: My step-by-step thought process: Given the anxiety and paranoia I'm feeling
 My concise talking content: I choose Player 5.
 
 Final: (1-th night) I choose Player 5.
- \``` </pre>
+</pre>
 
 
 ## Example of the CSV file Output
