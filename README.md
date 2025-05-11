@@ -311,7 +311,7 @@ DEFAULT_MODEL = "gpt-4-0125-preview"
     - Example: `--current-game-number.csv`
 
 
-# Data Flow: From input to output
+# Data Flow: From Input to Output
 
 This walkthrough clarifies how data (configurations, prompts, personalities, and conversations) flows through your system from start to finish.
 
@@ -357,11 +357,11 @@ Manages how and when agents interact with each other and receive updates.
 
 Transformation:
 
-During each round, prompts are sent to language models (via OpenAI, Cohere, or Anthropic APIs).
+* During each round, prompts are sent to language models (via OpenAI, Cohere, or Anthropic APIs).
 
-Responses (natural language text) are interpreted as in-game actions (e.g., voting, killing, saving).
+* Responses (natural language text) are interpreted as in-game actions (e.g., voting, killing, saving).
 
-Personality traits influence how players speak and react in conversations.
+* Personality traits influence how players speak and react in conversations.
 
 ## 4. Log Conversations and Actions
 Files Involved:
@@ -379,12 +379,12 @@ Each exchange, vote, and action is recorded as markdown-formatted text and also 
 ## 5. Convert Logs to Structured Data
 Files Involved:
 
-Custom scripts (not shown, assumed part of utils.py or external script):
-Parses game_logs.md and extracts structured data.
+* Custom scripts (not shown, assumed part of utils.py or external script):
+* Parses game_logs.md and extracts structured data.
 
 Output:
 
-A .csv file (e.g., in /misc/) is generated for quantitative analysis.
+* A .csv file (e.g., in /misc/) is generated for quantitative analysis.
 
 # Make a diagram
 
