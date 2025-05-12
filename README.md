@@ -423,9 +423,7 @@ Final: (1-th night) I choose Player 5.
 
 ![](Werewolf-main/images/CsvFileSample.png)
 
-# Analyzing the Data
-
-# 🔍 Interpreting and Analyzing Output Data
+# Interpreting and Analyzing Output Data
 
 Once the system has run and generated interaction logs or transcripts, the output files can be analyzed to derive insights about agent personality expression—especially the targeted implementation of neuroticism—and its effect on communication patterns.
 
