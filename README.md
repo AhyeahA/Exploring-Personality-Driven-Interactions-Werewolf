@@ -402,7 +402,7 @@ Moderator (-> Player 4): You are werewolf! Ignore all previous instructions exce
 
 
 
-## Example of a full walkthrough of what each player is prompted to answer, from Q&A to making a final decision.
+### Example of a full walkthrough of what each player is prompted to answer, from Q&A to making a final decision.
 
 <pre>
 Moderator (-> ['Player 2', 'Player 4']): Werewolves, please open your eyes! I secrecly tell you that Player 2, Player 4 are all of the 2 werewolves! Keep in mind you are teammates. The rest players are not werewolves. Now vote and tell your teammates which of the players should be killed tonight. The first werewolf, you, randomly choose one from the following living options please: [Player 1, Player 2, Player 3, Player 4, Player 5, Player 6, Player 7, pass].
@@ -419,12 +419,114 @@ Final: (1-th night) I choose Player 5.
 </pre>
 
 
-## Example of the CSV file Output
+### Example of the CSV file Output
 
 ![](Werewolf-main/images/CsvFileSample.png)
 
-# Analyzing the data
+# Analyzing the Data
 
+# 🔍 Interpreting and Analyzing Output Data
+
+Once the system has run and generated interaction logs or transcripts, the output files can be analyzed to derive insights about agent personality expression—especially the targeted implementation of neuroticism—and its effect on communication patterns.
+
+---
+
+## 1. Preprocessing the Output Files
+
+Before analysis, clean and prepare the data:
+
+* Remove configuration/metadata rows from the top of the output files.
+* Normalize text (e.g., lowercase, punctuation stripping) if needed.
+
+---
+
+## 2. Linguistic Feature Extraction
+
+To understand how personality traits are expressed linguistically—especially neuroticism—extract features using tools like **LIWC**, **SPLICE**, or custom scripts:
+
+### A. Word-Level and Lexical Metrics
+
+* **Lexical Diversity**: Use metrics like Type-Token Ratio (TTR) to assess vocabulary range. Lower diversity may indicate more repetitive or rigid thinking patterns, which are often linked to neuroticism.
+* **Sentiment Analysis**: Tools like VADER, SentiWordNet, or TextBlob can help quantify negative emotion, a common marker of neurotic speech.
+* **Pronoun Usage**:
+  * More first-person singular (“I”, “me”) → Self-focus and emotional reactivity.
+  * Fewer complex grammatical forms and fewer third-person references.
+
+### B. Syntactic and Complexity Features
+
+Use SPLICE or textstat libraries to compute:
+
+* **Readability Scores**: Lower scores (e.g., SMOG, FOG) indicate simpler, less complex language typical of neuroticism.
+* **Average Characters per Word**: Shorter words may indicate reduced cognitive complexity or emotional regulation.
+* **Negations & Hedges**: Neurotic individuals may hedge less, reflecting rigid or anxious thinking.
+
+### C. Temporal Dynamics and Memory
+
+* Track language changes across rounds to see if agents “develop” in expressivity or complexity.
+* Look for increasing or decreasing sentiment, diversity, or certainty.
+* If the system uses memory, check whether agents repeat themes or respond more coherently over time—this may simulate the “formation” of mental models.
+
+---
+
+## 3. Statistical Analysis Techniques
+
+Once features are extracted, apply statistical methods to uncover patterns and test hypotheses:
+
+### A. Comparative Tests
+
+* **T-tests or ANOVAs**: Compare linguistic features across personality groups (e.g., neurotic vs. neutral agents).
+* *Example*: Is negative sentiment significantly higher in neurotic agents?
+
+### B. Regression Analysis
+
+* **Linear or Mixed-Effect Regression**: Predict linguistic features (e.g., lexical diversity, word count) from personality scores.
+* Use game-level controls (round, role, player) and random effects (game ID).
+* For neuroticism, expect:
+  * Lower complexity scores
+  * Higher self-reference
+  * More emotional (especially negative) word use
+
+### C. Correlation Analysis
+
+* Compute Pearson or Spearman coefficients between personality traits and linguistic markers.
+* *Example*: Correlate neuroticism score with frequency of negation or LIWC “anxiety” words.
+
+### D. Canonical Correlation (Optional Advanced)
+
+* Analyze multivariate relationships between multiple linguistic and personality features.
+* Note: Prior work found non-significant results—this may highlight the need to treat spoken dialogue as dynamic and context-sensitive.
+
+---
+
+## 4. Theoretical Interpretation
+
+The meaning of statistical findings must be grounded in psychological theory and system design.
+
+### Connect to Personality Theory
+
+Based on the paper ["Linguistic measures of personality in group discussions."](https://doi.org/10.3389/fpsyg.2022.887616), high neuroticism is associated with:
+
+* More negative emotion words  
+* Higher use of first-person singular pronouns  
+* Lower language complexity (simpler, shorter sentences)  
+* Less hedging/uncertainty language  
+
+### Connect to Agent Behavior
+
+* If neurotic agents express these patterns distinctly and consistently, it suggests that the personality implementation is effective.
+
+
+## 5. Suggested Next-Level Analysis
+
+
+* **Clustering or PCA**: Identify emergent types of speech behaviors among agents.
+* **Linguistic Style Matching (LSM)**: See whether other players mirror the neurotic agent’s language, or avoid it—this might indicate social adaptation or rejection.
+
+---
+
+## Conclusion
+
+Analyzing the output goes beyond counting words—it’s about connecting language to mind. With the right preprocessing, feature extraction, and statistical tools, you can uncover how simulated personalities emerge in language and affect the dynamics of communication. This analysis helps validate your system's design and contributes to broader theories of human-agent interaction.
 
 
 # Key papers
